@@ -1,0 +1,84 @@
+@font-face {
+    font-family: Roboto;
+    src: url('fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+body {
+    width: 100%;
+    background-color: #fafafa;
+    font-family: Roboto,Noto,sans-serif;
+}
+
+.card {
+    width: 90%;
+    height: 15rem;
+}
+
+.card, .list-group {
+    background-color: white;
+    margin: 1.3rem auto;
+    margin-top: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 5px rgb(200, 200, 200);
+}
+
+h5.card-title {
+    color: #727272;
+}
+
+p.card-text {
+    font-size: 2rem;
+}
+
+.card-info {
+    margin: 1.3rem 0 0 1.3rem;
+}
+
+.card-text > span {
+    color: #727272;
+    font-size: 1.5rem;
+}
+
+.card-body {
+    padding: 0;
+}
+
+svg {
+    border-radius: 1rem;
+}
+
+#clock, #weather {
+    margin-top: 1rem;
+    width: 100%;
+    color: #5c5c5c;
+    text-align: center;
+}
+
+#clock > p {
+    margin-bottom: 0;
+}
+
+#time {
+    font-size: 4rem;
+}
+
+#week, #body-temp {
+    font-size: 1.5rem;
+}
+
+#weather {
+    margin-top: 0.5rem;
+    font-size: 2rem;
+}
+
+#weather > p {
+    margin-bottom: 0;
+}
+
+#weather > i {
+    margin-right: 1.5rem;
+}
+
+.list-group {
+    margin-right: 1.4rem;
+}
