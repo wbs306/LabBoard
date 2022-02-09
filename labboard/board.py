@@ -24,4 +24,4 @@ def load_board():
     kwargs = {
         "sensor_data": sensor_data
     }
-    return render_template('board.html.j2', **kwargs)
+    return render_template('board.html', **kwargs)
