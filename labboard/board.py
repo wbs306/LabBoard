@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template
+    Blueprint, render_template, request, jsonify
 )
 from labboard.db import get_db
 
@@ -25,3 +25,11 @@ def load_board():
         "sensor_data": sensor_data
     }
     return render_template('board.html', **kwargs)
+
+@bp.route('/getLocation', methods=['POST'])
+def get_location():
+    from labboard.QWeather import get_city
+    if (request.method == "POST"):
+        location = request.form["location"]
+    
+    return jsonify(get_city(location))
