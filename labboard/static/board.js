@@ -80,3 +80,36 @@ function setGraphic(card_name, values, g_config) {
   line_svg.append(line_path);
   $(card_name + " .line-chart").append(line_svg);
 }
+
+function getLocationData() {
+  $("select").remove();
+  let select = $("<select class='form-select' name='city-select'>");
+  let spinner = $("<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>");
+  $(".modal-body").append(spinner);
+  $.post($SCRIPT_ROOT + "/board/getLocation", {
+    "location": $("input[name=location]").val()
+  }, function (data) {
+    spinner.remove();
+    for (let city of data) {
+      let new_option = $("<option></option>");
+      new_option.text(city["country"] + ", " + city["adm1"] + ", " + city["adm2"] + ", " + city["name"]);
+      new_option.attr("value", city["id"]);
+      select.append(new_option);
+    }
+    $(".modal-body").append(select);
+  });
+}
+
+function getWeatherState() {
+  $.post($SCRIPT_ROOT + "/board/getWeatherState", {
+    "cityCode": $("select").val()
+  }, function (data) {
+    let weather_div = $("#weather");
+    weather_div.append($("<i></i>").attr("class", "qi-" + data["icon"]));
+    weather_div.append($("<span></span>").text(data["text"]));
+    weather_div.append($("<p></p>").text(data["tempMin"] + " ~ " + data["tempMax"] + " °C"));
+    weather_div.append($("<p id='body-temp'></p>").text("体感温度: " + data["feelsLike"] + "°C"));
+    
+    modal.toggle();
+  })
+}
