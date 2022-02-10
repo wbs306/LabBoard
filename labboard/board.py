@@ -33,3 +33,11 @@ def get_location():
         location = request.form["location"]
     
     return jsonify(get_city(location))
+
+@bp.route('/getWeatherState', methods=['POST'])
+def get_weather():
+    from labboard.QWeather import daily
+    if (request.method == "POST"):
+        city_code = request.form["cityCode"]
+    
+    return jsonify(daily(city_code))
