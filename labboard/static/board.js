@@ -82,12 +82,18 @@ function setGraphic(card_name, values, g_config) {
 }
 
 function getLocationData() {
+  let location_name = $("input[name=location]").val();
+  $("div.modal .alert").remove();
+  if (location_name == "") {
+    $(".modal-body").append($("<div class='alert alert-danger' role='alert'>请输入城市名字</div>"));
+    return;
+  }
   $("select").remove();
   let select = $("<select class='form-select' name='city-select'>");
   let spinner = $("<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>");
   $(".modal-body").append(spinner);
   $.post($SCRIPT_ROOT + "/board/getLocation", {
-    "location": $("input[name=location]").val()
+    "location": location_name
   }, function (data) {
     spinner.remove();
     for (let city of data) {
