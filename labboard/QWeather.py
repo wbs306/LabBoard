@@ -18,7 +18,7 @@ url_api_geo = 'https://geoapi.qweather.com/v2/city/'
 url_api_rain = 'https://devapi.qweather.com/v7/minutely/5m'
 url_api_air = 'https://devapi.qweather.com/v7/air/now'
 
-def get(api_type):
+def get(api_type, city_id):
     url = url_api_weather + api_type + '?location=' + city_id + mykey
     return requests.get(url).json()
 
@@ -34,14 +34,14 @@ def get_city(city_kw):
     url_v2 = url_api_geo + 'lookup?location=' + city_kw + mykey
     return requests.get(url_v2).json()['location']
 
-def now():
-    return get_now['now']
+def now(city_id):
+    return get('now', city_id)
 
-def daily():
-    return get_daily['daily']
+def daily(city_id):
+    return get('3d', city_id)
 
-def hourly():
-    return get_hourly['hourly']
+def hourly(city_id):
+    return get('24h', city_id)
 
 if __name__ == '__main__':
     if KEY == '':
