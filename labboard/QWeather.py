@@ -32,17 +32,7 @@ def air(city_id):
 
 def get_city(city_kw):
     url_v2 = url_api_geo + 'lookup?location=' + city_kw + mykey
-    city = requests.get(url_v2).json()['location'][0]
-
-    city_id = city['id']
-    district_name = city['name']
-    city_name = city['adm2']
-    province_name = city['adm1']
-    country_name = city['country']
-    lat = city['lat']
-    lon = city['lon']
-
-    return city_id, district_name, city_name, province_name, country_name, lat, lon
+    return requests.get(url_v2).json()['location']
 
 def now():
     return get_now['now']
