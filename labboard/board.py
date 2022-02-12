@@ -8,16 +8,6 @@ from labboard.db import get_db
 
 bp = Blueprint('board', __name__, url_prefix="/board")
 
-def get_weather_state_dict(now_weather, daily_weather):
-    return {
-        "temp": now_weather["temp"],
-        "icon": now_weather["icon"],
-        "text": now_weather["text"],
-        "feelsLike": now_weather["feelsLike"],
-        "tempMax": daily_weather["tempMax"],
-        "tempMin": daily_weather["tempMin"]
-    }
-
 @bp.route('/')
 def load_board():
     db = get_db()
@@ -40,33 +30,8 @@ def load_board():
         "record_exist": record_exist,
     }
     if (record_exist):
-        from labboard.QWeather import daily, now
+        from labboard.weather import get_weather
         with open(current_app.config["RECORD_FILE"], "r") as f:
             city_code = json.load(f)["city_code"]
-            daily_weather = daily(city_code)["daily"][0]
-            now_weather = now(city_code)["now"] 
-            kwargs["weather"] = get_weather_state_dict(now_weather, daily_weather)
+            kwargs["weather"] = get_weather(city_code)
     return render_template('board.html', **kwargs)
-
-@bp.route('/getLocation', methods=['POST'])
-def get_location():
-    from labboard.QWeather import get_city
-    if (request.method == "POST"):
-        location = request.form["location"]
-    
-    return jsonify(get_city(location))
-
-@bp.route('/getWeatherState', methods=['POST'])
-def get_weather(city_code=None):
-    from labboard.QWeather import daily, now
-    if (request.method == "POST"):
-        city_code = request.form["cityCode"]
-
-    with open(current_app.config["RECORD_FILE"], "w+") as f:
-        json.dump({
-            "city_code": city_code
-        }, f)
-
-    daily_weather = daily(city_code)["daily"][0]
-    now_weather = now(city_code)["now"]
-    return jsonify(get_weather_state_dict(now_weather, daily_weather))

@@ -92,7 +92,7 @@ function getLocationData() {
   let select = $("<select class='form-select' name='city-select'>");
   let spinner = $("<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>");
   $(".modal-body").append(spinner);
-  $.post($SCRIPT_ROOT + "/board/getLocation", {
+  $.post($SCRIPT_ROOT + "/weather/getLocation", {
     "location": location_name
   }, function (data) {
     spinner.remove();
@@ -107,7 +107,7 @@ function getLocationData() {
 }
 
 function getWeatherState() {
-  $.post($SCRIPT_ROOT + "/board/getWeatherState", {
+  $.post($SCRIPT_ROOT + "/weather/getWeatherState", {
     "cityCode": $("select").val()
   }, function (data) {
     let weather_div = $("#weather");

@@ -36,6 +36,9 @@ def create_app(test_config=None):
     from . import express
     app.register_blueprint(express.bp)
 
+    from . import weather
+    app.register_blueprint(weather.bp)
+
     # a simple page that says hello
     @app.route('/')
     def hello():
