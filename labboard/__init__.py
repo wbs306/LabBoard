@@ -33,6 +33,9 @@ def create_app(test_config=None):
     from . import board
     app.register_blueprint(board.bp)
 
+    from . import express
+    app.register_blueprint(express.bp)
+
     # a simple page that says hello
     @app.route('/')
     def hello():
