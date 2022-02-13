@@ -5,12 +5,12 @@
 
 body {
     width: 100%;
+    padding: 0 1.5%;
     background-color: #fafafa;
     font-family: Roboto,Noto,sans-serif;
 }
 
 .card {
-    width: 90%;
     height: 15rem;
 }
 
@@ -77,8 +77,4 @@ svg {
 
 #weather > i {
     margin-right: 1.5rem;
-}
-
-.list-group {
-    margin-right: 1.4rem;
 }
