@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from flask import Flask
 
@@ -26,6 +27,10 @@ def create_app(test_config=None):
         os.makedirs(app.instance_path)
     except OSError:
         pass
+
+    @app.template_global("format_date")
+    def format_date(date):
+        return datetime.fromtimestamp(int(date))
 
     from . import db
     db.init_app(app)
