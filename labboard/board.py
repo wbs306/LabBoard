@@ -32,6 +32,7 @@ def load_board():
     if (record_exist):
         from labboard.weather import get_weather
         with open(current_app.config["RECORD_FILE"], "r") as f:
-            city_code = json.load(f)["city_code"]
-            kwargs["weather"] = get_weather(city_code)
+            record = json.load(f)
+            kwargs["weather"] = get_weather(record["city_code"])
+            packages = record["packages"]
     return render_template('board.html', **kwargs)
