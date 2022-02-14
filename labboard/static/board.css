@@ -10,6 +10,12 @@ body {
     font-family: Roboto,Noto,sans-serif;
 }
 
+::-webkit-scrollbar{
+    width: 0px;
+    height: 7px;
+    background-color: white;
+}
+
 .card {
     height: 15rem;
 }
