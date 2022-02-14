@@ -17,11 +17,13 @@ def get_express_company():
     return jsonify(baidu_express.get_express_company(number))
 
 @bp.route("/getExpressState", methods=["POST"])
-def get_express_state():
+def get_express_state(number=None, company=None):
     if (request.method == "POST"):
         number = request.form["number"]
         company = request.form["company"]
-    return jsonify(baidu_express.get_express_state(number, company))
+        return jsonify(baidu_express.get_express_state(number, company))
+    else:
+        return baidu_express.get_express_state(number, company)
 
 @bp.route("/addPackage", methods=["POST"])
 def add_package():
