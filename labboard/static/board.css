@@ -97,6 +97,7 @@ svg {
     font-size: 1.25rem;
     margin-right: 1.3rem;
     text-decoration: none;
+    cursor: pointer;
 }
 
 #packages-list {
