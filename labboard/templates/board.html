@@ -85,7 +85,7 @@
           {% endif %}
         </div>
         <div class="col">
-          <ul class="list-group">
+          <ul class="list-group" id="tasks-list">
             <li class="list-group-item">
               <input class="form-check-input me-1" type="checkbox" value="" aria-label="...">
               学习
@@ -95,6 +95,52 @@
               学习
             </li>
           </ul>
+        </div>
+      </div>
+      <div class="row row-cols-2">
+        <div class="col-8">
+          <div class="card" id="express-card">
+            <div class="card-body">
+              <div class="card-info">
+                <h5 class="card-title mb-3">
+                    快递信息
+                  <a class="btn-link float-end" id="add-pack">+    添加包裹</a>
+                </h5>
+              </div>
+              <div class="container border-top">
+                <div class="row">
+                  <div class="col-5">
+                    <div class="list-group" id="packages-list" role="tablist">
+                      {% for i in packages_info %}
+                      <a class="list-group-item list-group-item-action border-start-0 package-item" data-bs-toggle="list" href={{ "#package-" + i["number"] }} role="tab">
+                        <div class="d-flex w-100 justify-content-between">
+                          <h5 class="mb-1">{{ i["name"] }}</h5>
+                          <small class="text-muted">{{ i["info"]["current"] }}</small>
+                        </div>
+                        <p class="mb-1">{{ i["info"]["latest_progress"] }}</p>
+                        <small class="text-muted">{{ i["info"]["latest_time"] }}</small>
+                      </a>
+                      {% endfor %}  
+                    </div>
+                  </div>
+                  <div class="col-7">
+                    <div class="tab-content">
+                      {% for i in packages_info  %}
+                      <div class="tab-pane fade show track-detail" role="tabpanel" id={{ "package-" + i["number"]}}>
+                        {% for t in i["info"]["context"] %}
+                        <div class="track">
+                          <p class="mb-1">{{ t["desc"] }}</p>
+                          <small class="text-muted">{{ format_date(t["time"]) }}</small>
+                          <span class="timeline"></span>
+                        </div>
+                        {% endfor %}
+                      </div>                        
+                      {% endfor %}
+                    </div>
+                  </div>
+                </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
