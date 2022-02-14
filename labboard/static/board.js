@@ -117,6 +117,6 @@ function getWeatherState() {
     weather_div.append($("<p></p>").text(data["tempMin"] + " ~ " + data["tempMax"] + " °C"));
     weather_div.append($("<p id='body-temp'></p>").text("体感温度: " + data["feelsLike"] + "°C"));
     
-    modal.toggle();
+    location_modal.toggle();
   })
 }
