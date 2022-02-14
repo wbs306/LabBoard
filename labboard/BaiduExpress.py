@@ -25,11 +25,13 @@ class BaiduExpress:
         if (result["info"]["state"] == "0"):
             return {
                 "info": result["info"],
-                "notice": result["notice"]
+                "notice": result["notice"],
+                "name": result["company"]["fullname"]
             }
         else:
             return {
-                "info": result["info"]
+                "info": result["info"],
+                "name": result["company"]["fullname"]
             }
 
     def get_express_company(self, number):
