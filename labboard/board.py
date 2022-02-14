@@ -35,7 +35,9 @@ def load_board():
         with open(current_app.config["RECORD_FILE"], "r") as f:
             record = json.load(f)
             kwargs["weather"] = get_weather(record["city_code"])
-            packages = record["packages"]
+            packages = []
+            if (record.get("packages")):
+                packages = record["packages"]
         kwargs["packages_info"] = []
         for i in packages:
             state = get_express_state(i["number"], i["company"])
