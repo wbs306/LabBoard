@@ -83,19 +83,19 @@ function setGraphic(card_name, values, g_config) {
 
 function getLocationData() {
   let location_name = $("input[name=location]").val();
-  $("div.modal .alert").remove();
-  $("div.modal .spinner-border").remove();
+  $("#location-modal .alert").remove();
+  $("#location-modal .spinner-border").remove();
   if (location_name == "") {
-    $(".modal-body").append($("<div class='alert alert-danger' role='alert'>请输入城市名字</div>"));
+    $("#location-modal .modal-body").append($("<div class='alert alert-danger' role='alert'>请输入城市名字</div>"));
     return;
   }
   let select = $("<select class='form-select' name='city-select'>");
   let spinner = $("<div class='spinner-border text-primary' role='status'><span class='visually-hidden'>Loading...</span></div>");
-  $(".modal-body").append(spinner);
+  $("#location-modal .modal-body").append(spinner);
   $.post($SCRIPT_ROOT + "/weather/getLocation", {
     "location": location_name
   }, function (data) {
-    $("select").remove();
+    $("#location-modal select").remove();
     spinner.remove();
     for (let city of data) {
       let new_option = $("<option></option>");
@@ -103,7 +103,7 @@ function getLocationData() {
       new_option.attr("value", city["id"]);
       select.append(new_option);
     }
-    $(".modal-body").append(select);
+    $("#location-modal .modal-body").append(select);
   });
 }
 
