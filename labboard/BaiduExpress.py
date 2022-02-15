@@ -37,7 +37,12 @@ class BaiduExpress:
     def get_express_company(self, number):
         url = f"https://alayn.baidu.com/express/appdetail/autotip?&orderId={number}&sandbox=true"
         result = requests.get(url, headers=self.header).json()["data"]
-        return {
-            "name": result["name"],
-            "company": result["company"]
-        }
+        if (result.get("name")):
+            return {
+                "name": result["name"],
+                "company": result["company"]
+            }
+        else:
+            return {
+                "name": "快递单号有误"
+            }
