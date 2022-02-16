@@ -11,7 +11,7 @@ bp = Blueprint('board', __name__, url_prefix="/board")
 @bp.route('/')
 def load_board():
     db = get_db()
-    sensor_record = db.execute("SELECT * FROM SensorCollector").fetchall()
+    sensor_record = db.execute("SELECT * FROM SensorCollector WHERE date > DATETIME('NOW', '-1 DAY')").fetchall()
     fan_record = db.execute("SELECT * FROM FanCollector").fetchall()
     ups_record = db.execute("SELECT * FROM UPSCollector").fetchall()
     sensor_data = {
@@ -19,10 +19,16 @@ def load_board():
         "temperature": [],
         "humidity": []
     }
+
+    last_temp = 0
+    temp_diff = 0.35
     for i in sensor_record:
+        if (abs(i[1] - last_temp) < temp_diff):
+            continue
         sensor_data["date"].append(i[0])
         sensor_data["temperature"].append(round(i[1], 1))
         sensor_data["humidity"].append(round(i[2], 2))
+        last_temp = i[1]
 
     record_exist = os.path.exists(current_app.config["RECORD_FILE"])
     kwargs = {
