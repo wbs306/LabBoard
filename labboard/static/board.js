@@ -45,12 +45,7 @@ function getWeatherState() {
   $.post($SCRIPT_ROOT + "/weather/getWeatherState", {
     "cityCode": $("select").val()
   }, function (data) {
-    let weather_div = $("#weather");
-    weather_div.append($("<i></i>").attr("class", "qi-" + data["icon"]));
-    weather_div.append($("<span></span>").text(data["text"]));
-    weather_div.append($("<p></p>").text(data["tempMin"] + " ~ " + data["tempMax"] + " °C"));
-    weather_div.append($("<p id='body-temp'></p>").text("体感温度: " + data["feelsLike"] + "°C"));
-    
+    $("#clock").parent().append($(data));
     location_modal.toggle();
   })
 }

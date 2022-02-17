@@ -2,7 +2,7 @@ import json
 from threading import stack_size
 
 from flask import (
-    Blueprint, current_app, request, jsonify
+    Blueprint, current_app, render_template, request, jsonify
 )
 
 bp = Blueprint("weather", __name__, url_prefix="/weather")
@@ -35,6 +35,6 @@ def get_weather(city_code=None):
         "tempMin": daily_weather["tempMin"]
     }
     if (request.method == "POST"):
-        return jsonify(state_dict)
+        return render_template("weather.html", **{"weather": state_dict})
     else:
         return state_dict
