@@ -1,0 +1,32 @@
+{% macro get_card(name, title, unit) %}
+<div class="card" id={{ name + "-card" }}>
+  <div class="card-body">
+    <div class="card-info">
+      <h5 class="card-title">{{ title }}</h5>
+      <p class="card-text">{{ sensor_data[name][-1] }} <span>{{ unit }}</span></p>
+    </div>
+    <div class="line-chart"></div>
+  </div>
+</div>
+{% endmacro %}
+
+{{ get_card("temperature", "温度", "°C") }}
+{{ get_card("humidity", "湿度", "%") }}
+<script src={{ url_for("static", filename="sensor_card.js") }}></script>
+<script>
+  let data = {{ sensor_data["temperature"] | safe }};
+  setGraphic("#temperature-card", data, {
+      "fill": "#ff980030",
+      "line": "#ff9800",
+      "line_width": 3,
+      "linecap": "round"
+    });
+  
+  data = {{ sensor_data["humidity"] | safe }};
+  setGraphic("#humidity-card", data, {
+    "fill": "#3366cc30",
+    "line": "#3366cc",
+    "line_width": 3,
+    "linecap": "round"
+  });
+</script>

@@ -23,24 +23,7 @@
     <div class="container-fluid">
       <div class="row row-cols-3">
         <div class="col">
-          <div class="card" id="temp-card">
-            <div class="card-body">
-              <div class="card-info">
-                <h5 class="card-title">温度</h5>
-                <p class="card-text">{{ sensor_data["temperature"][-1] }} <span>°C</span></p>
-              </div>
-              <div class="line-chart"></div>
-            </div>
-          </div>
-          <div class="card" id="humidity-card">
-            <div class="card-body">
-              <div class="card-info">
-                <h5 class="card-title">相对湿度</h5>
-                <p class="card-text">{{ sensor_data["humidity"][-1] }} <span>%</span></p>
-              </div>
-              <div class="line-chart"></div>
-            </div>
-          </div>
+          {% include 'sensor_card.html' %}
         </div>
         <div class="col">
           <div id="clock">
@@ -149,22 +132,6 @@
   <script type="text/javascript">
     clock();
     setInterval(clock, 1000);
-
-    let t = {{ sensor_data["temperature"] | safe }};
-    setGraphic("#temp-card", t, {
-      "fill": "#ff980030",
-      "line": "#ff9800",
-      "line_width": 3,
-      "linecap": "round"
-    });
-
-    t = {{ sensor_data["humidity"] | safe }};
-    setGraphic("#humidity-card", t, {
-      "fill": "#3366cc30",
-      "line": "#3366cc",
-      "line_width": 3,
-      "linecap": "round"
-    });
 
     $(".track:last-child timeline").remove();
     $(".track-detail:first-child").addClass("active");
