@@ -7,6 +7,7 @@
     integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/qweather-icons@1.1.0/font/qweather-icons.css">
   <link rel="stylesheet" href={{ url_for("static", filename="board.css") }}>
+  <link rel="stylesheet" href={{ url_for("static", filename="express_card.css") }}>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
@@ -75,48 +76,7 @@
       </div>
       <div class="row row-cols-2">
         <div class="col-8">
-          <div class="card" id="express-card">
-            <div class="card-body">
-              <div class="card-info">
-                <h5 class="card-title mb-3">
-                    快递信息
-                  <a class="btn-link float-end" id="add-pack">+    添加包裹</a>
-                </h5>
-              </div>
-              <div class="container border-top">
-                <div class="row">
-                  <div class="col-5">
-                    <div class="list-group" id="packages-list" role="tablist">
-                      {% for i in packages_info %}
-                      <a class="list-group-item list-group-item-action border-start-0 package-item" data-bs-toggle="list" href={{ "#package-" + i["number"] }} role="tab">
-                        <div class="d-flex w-100 justify-content-between">
-                          <h5 class="mb-1">{{ i["name"] }}</h5>
-                          <small class="text-muted">{{ i["info"]["current"] }}</small>
-                        </div>
-                        <p class="mb-1">{{ i["info"]["latest_progress"] }}</p>
-                        <small class="text-muted">{{ i["info"]["latest_time"] }}</small>
-                      </a>
-                      {% endfor %}  
-                    </div>
-                  </div>
-                  <div class="col-7">
-                    <div class="tab-content">
-                      {% for i in packages_info  %}
-                      <div class="tab-pane fade show track-detail" role="tabpanel" id={{ "package-" + i["number"]}}>
-                        {% for t in i["info"]["context"] %}
-                        <div class="track">
-                          <p class="mb-1">{{ t["desc"] }}</p>
-                          <small class="text-muted">{{ format_date(t["time"]) }}</small>
-                          <span class="timeline"></span>
-                        </div>
-                        {% endfor %}
-                      </div>                        
-                      {% endfor %}
-                    </div>
-                  </div>
-                </div>
-            </div>
-          </div>
+          {% include 'express/express_card.html' %}
         </div>
       </div>
     </div>
@@ -125,10 +85,6 @@
   <script type="text/javascript">
     clock();
     setInterval(clock, 1000);
-
-    $(".track:last-child timeline").remove();
-    $(".track-detail:first-child").addClass("active");
-    $(".package-item:first-child").addClass("active");
   </script>
 
 </body>
