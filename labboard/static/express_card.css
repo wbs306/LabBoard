@@ -33,6 +33,10 @@
     border-bottom-left-radius: 0;
 }
 
+#packages-list .active .text-muted {
+    color: white!important;
+}
+
 .package-item p.mb-1 {
     overflow: hidden;
     text-overflow: ellipsis;
