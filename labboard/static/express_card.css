@@ -27,6 +27,8 @@
 
 .track-detail {
     overflow-y: auto;
+    padding-right: 1.5rem;
+    padding-bottom: 1.5rem;
 }
 
 #packages-list .list-group-item:last-child {
