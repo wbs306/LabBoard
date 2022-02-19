@@ -3,18 +3,14 @@ import sqlite3
 from flask import current_app, g
 
 def get_db():
-    if 'db' not in g:
-        g.db = sqlite3.connect(
-            current_app.config['DATABASE']
-        )
-        g.db.row_factory = sqlite3.Row
-    return g.db
+    db = sqlite3.connect(current_app.config['DATABASE'])
+    db.row_factory = sqlite3.Row
+    return db
 
-def close_db(e=None):
-    db = g.pop('db', None)
-
-    if db is not None:
-        db.close()
-
-def init_app(app):
-    app.teardown_appcontext(close_db)
+def query_db(query, args=(), one=False):
+    db = get_db()
+    cursor = db.execute(query, args)
+    db.commit()
+    result = cursor.fetchall()
+    db.close()
+    return (result[0] if (result) else None) if (one) else result

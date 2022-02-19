@@ -4,16 +4,15 @@ import os
 from flask import (
     Blueprint, render_template, request, jsonify, current_app
 )
-from labboard.db import get_db
+from labboard.db import query_db
 
 bp = Blueprint('board', __name__, url_prefix="/board")
 
 @bp.route('/')
 def load_board():
-    db = get_db()
-    sensor_record = db.execute("SELECT * FROM SensorCollector WHERE date > DATETIME('NOW', '-1 DAY')").fetchall()
-    fan_record = db.execute("SELECT * FROM FanCollector").fetchall()
-    ups_record = db.execute("SELECT * FROM UPSCollector").fetchall()
+    sensor_record = query_db("SELECT * FROM SensorCollector WHERE date > DATETIME('NOW', '-1 DAY')")
+    fan_record = query_db("SELECT * FROM FanCollector")
+    ups_record = query_db("SELECT * FROM UPSCollector")
     sensor_data = {
         "date": [],
         "temperature": [],

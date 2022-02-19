@@ -32,9 +32,6 @@ def create_app(test_config=None):
     def format_date(date):
         return datetime.fromtimestamp(int(date))
 
-    from . import db
-    db.init_app(app)
-
     from . import board
     app.register_blueprint(board.bp)
 
