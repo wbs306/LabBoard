@@ -2,18 +2,16 @@ import os
 from datetime import datetime
 
 from flask import Flask
+from . import QWeather
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__, instance_relative_config=True)
-    key_file = open(os.path.join(app.instance_path, 'qweather_key.key'))
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'test.db'),
         RECORD_FILE=os.path.join(app.instance_path, 'record.json'),
-        QWEATHER_KEY=key_file.read()
     )
-    key_file.close()
 
     if test_config is None:
         # load the instance config, if it exists, when not testing
@@ -40,6 +38,8 @@ def create_app(test_config=None):
 
     from . import weather
     app.register_blueprint(weather.bp)
+    with open(os.path.join(app.instance_path, 'qweather_key.key')) as f:
+        weather.init_app(QWeather.QWeather(f.read()))
 
     # a simple page that says hello
     @app.route('/')
