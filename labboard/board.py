@@ -5,29 +5,13 @@ from flask import (
     Blueprint, render_template, request, jsonify, current_app
 )
 from labboard.db import query_db
+from labboard.device import get_sensor_data
 
 bp = Blueprint('board', __name__, url_prefix="/board")
 
 @bp.route('/')
 def load_board():
-    sensor_record = query_db("SELECT * FROM SensorCollector WHERE date > DATETIME('NOW', '-1 DAY')")
-    fan_record = query_db("SELECT * FROM FanCollector")
-    ups_record = query_db("SELECT * FROM UPSCollector")
-    sensor_data = {
-        "date": [],
-        "temperature": [],
-        "humidity": []
-    }
-
-    last_temp = 0
-    temp_diff = 0.35
-    for i in sensor_record:
-        if (abs(i[1] - last_temp) < temp_diff):
-            continue
-        sensor_data["date"].append(i[0])
-        sensor_data["temperature"].append(round(i[1], 1))
-        sensor_data["humidity"].append(round(i[2], 2))
-        last_temp = i[1]
+    sensor_data = get_sensor_data()
 
     record_exist = os.path.exists(current_app.config["RECORD_FILE"])
     kwargs = {

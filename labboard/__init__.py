@@ -41,6 +41,9 @@ def create_app(test_config=None):
     with open(os.path.join(app.instance_path, 'qweather_key.key')) as f:
         weather.init_app(QWeather.QWeather(f.read()))
 
+    from . import device
+    app.register_blueprint(device.bp)
+
     # a simple page that says hello
     @app.route('/')
     def hello():
