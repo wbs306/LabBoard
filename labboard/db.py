@@ -1,6 +1,6 @@
 import sqlite3
 
-from flask import current_app, g
+from flask import current_app
 
 def get_db():
     db = sqlite3.connect(current_app.config['DATABASE'])

@@ -3,10 +3,9 @@ import os
 from concurrent.futures import as_completed
 
 from flask import (
-    Blueprint, render_template, request, jsonify, current_app
+    Blueprint, render_template, current_app
 )
 from flask_executor import Executor
-from labboard.db import query_db
 from labboard.device import get_sensor_data
 
 bp = Blueprint('board', __name__, url_prefix="/board")

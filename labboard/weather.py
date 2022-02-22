@@ -1,5 +1,4 @@
 import json
-from threading import stack_size
 
 from flask import (
     Blueprint, current_app, render_template, request, jsonify
