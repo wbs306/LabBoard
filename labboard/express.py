@@ -19,9 +19,10 @@ def get_express_state(number=None, company=None):
     if (request.method == "POST"):
         number = request.form["number"]
         company = request.form["company"]
-        return jsonify(baidu_express.get_express_state(number, company))
-    else:
-        return baidu_express.get_express_state(number, company)
+    
+    result = baidu_express.get_express_state(number, company)
+    result["number"] = number
+    return jsonify(result) if (request.method == "POST") else result
 
 @bp.route("/addPackage", methods=["POST"])
 def add_package():
