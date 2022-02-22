@@ -1,9 +1,11 @@
 import json
 import os
+from concurrent.futures import as_completed
 
 from flask import (
     Blueprint, render_template, request, jsonify, current_app
 )
+from flask_executor import Executor
 from labboard.db import query_db
 from labboard.device import get_sensor_data
 
@@ -23,13 +25,16 @@ def load_board():
         from labboard.express import get_express_state
         with open(current_app.config["RECORD_FILE"], "r") as f:
             record = json.load(f)
-            kwargs["weather"] = get_weather(record["city_code"])
             packages = []
             if (record.get("packages")):
                 packages = record["packages"]
-        kwargs["packages_info"] = []
-        for i in packages:
-            state = get_express_state(i["number"], i["company"])
-            state["number"] = i["number"]
-            kwargs["packages_info"].append(state)
+            
+            package_workers = []
+            executor = Executor(current_app)
+            for i in packages:
+                package_workers.append(executor.submit(get_express_state, i["number"], i["company"]))
+
+            weather_worker = executor.submit(get_weather, record["city_code"])
+            kwargs["packages_info"] = [i.result() for i in as_completed(package_workers)]
+            kwargs["weather"] = next(as_completed([weather_worker])).result()
     return render_template('board.html', **kwargs)
