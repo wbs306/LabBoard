@@ -11,6 +11,7 @@ def create_app(test_config=None):
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'test.db'),
         RECORD_FILE=os.path.join(app.instance_path, 'record.json'),
+        EXECUTOR_MAX_WORKERS=4
     )
 
     if test_config is None:
