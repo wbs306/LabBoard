@@ -64,14 +64,13 @@ def delete_package():
     if (request.method == "POST"):
         package_info = {
             "number": request.form["number"],
-            "company": request.form["company"],
             "name": request.form["name"]
         }
         with open(current_app.config["RECORD_FILE"], "r") as f:
             record = json.load(f)
         if (record.get("packages")):
             for p in record["packages"]:
-                if (p == package_info):
+                if (p["number"] == package_info["number"] and p["name"] == p["name"]):
                     record["packages"].remove(p)
                     with open(current_app.config["RECORD_FILE"], "w") as f:
                         json.dump(record, f)
