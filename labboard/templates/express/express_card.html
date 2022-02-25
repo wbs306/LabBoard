@@ -3,7 +3,7 @@
     <div class="card-info">
       <h5 class="card-title mb-3">
         快递信息
-        <a class="btn-link float-end text-danger manage-pack">删除包裹</a>
+        <a class="btn-link float-end text-danger manage-pack" onclick="deletePackage()">删除包裹</a>
         <a class="btn-link float-end manage-pack">添加包裹</a>
       </h5>
     </div>
@@ -32,3 +32,5 @@
   $(".track-detail:first-child").addClass("active");
   $(".package-item:first-child").addClass("active");
 </script>
+
+<script src={{ url_for("static", filename="express_card.js") }}></script>
