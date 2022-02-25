@@ -1,3 +1,8 @@
+$(".track:last-child .timeline").remove();
+$(".track:first-child p").removeClass("text-muted");
+$(".track-detail:first-child").addClass("active");
+$(".package-item:first-child").addClass("active");
+
 function deletePackage() {
     let curr_item = $(".package-item.active");
     let curr_track = $(".track-detail.active");
