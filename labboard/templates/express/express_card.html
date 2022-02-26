@@ -11,7 +11,9 @@
       <div class="row">
         <div class="col-5">
           <div class="list-group" id="packages-list" role="tablist">
-            {% include 'express/package_list.html' %}
+            {% for item in packages_info %}
+            {% include 'express/package_list_item.html' %}
+            {% endfor %}
           </div>
         </div>
         <div class="col-7">
