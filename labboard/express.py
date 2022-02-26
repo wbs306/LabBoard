@@ -2,7 +2,7 @@ import json
 
 from labboard.BaiduExpress import BaiduExpress
 from flask import (
-    Blueprint, request, jsonify, current_app
+    Blueprint, request, jsonify, current_app, render_template
 )
 
 bp = Blueprint("express", __name__, url_prefix="/express")
@@ -22,7 +22,7 @@ def get_express_state(number=None, company=None):
     
     result = baidu_express.get_express_state(number, company)
     result["number"] = number
-    return jsonify(result) if (request.method == "POST") else result
+    return render_template("express/package_state.html", **{"item": result}) if (request.method == "POST") else result
 
 @bp.route("/addPackage", methods=["POST"])
 def add_package():
