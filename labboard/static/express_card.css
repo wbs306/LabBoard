@@ -13,6 +13,14 @@
     cursor: pointer;
 }
 
+.manage-pack::after {
+    display: none;
+}
+
+#add-package {
+    padding: 1rem 0.5rem;
+}
+
 #packages-list {
     overflow-y: scroll;
     border-radius: 0rem;

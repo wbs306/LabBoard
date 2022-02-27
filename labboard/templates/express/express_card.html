@@ -4,7 +4,13 @@
       <h5 class="card-title mb-3">
         快递信息
         <a class="btn-link float-end text-danger manage-pack" onclick="deletePackage()">删除包裹</a>
-        <a class="btn-link float-end manage-pack">添加包裹</a>
+        <a class="btn-link float-end manage-pack dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside">添加包裹</a>
+        <div class="dropdown-menu" id="add-package">
+          <div class="input-group mb-4" >
+            <input type="text" class="form-control" placeholder="快递单号" name="number">
+            <button class="btn btn-primary disabled" type="button" onclick="addPackage()">添加</button>
+          </div>
+        </div>
       </h5>
     </div>
     <div class="container border-top">
