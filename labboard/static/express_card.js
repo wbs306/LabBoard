@@ -1,8 +1,3 @@
-$(".track:last-child .timeline").remove();
-$(".track:first-child p").removeClass("text-muted");
-$(".track-detail:first-child").addClass("active");
-$(".package-item:first-child").addClass("active");
-
 let input_timer;
 let last_input;
 $("#add-package input").on("keyup", e => {
@@ -31,6 +26,16 @@ $("#add-package input").on("keyup", e => {
     }, 2000)
 })
 
+refreshCard();
+
+function refreshCard() {
+    $(".track:last-child .timeline").remove();
+    $(".track:first-child p").removeClass("text-muted");
+    $(".track-detail:first-child").addClass("active");
+    $(".track-detail:first-child").addClass("show");
+    $(".package-item:first-child").addClass("active");
+}
+
 function addPackage() {
     let number = $("#add-package input").val();
     let company = $("#add-package p").attr("id").split("-")[1];
@@ -50,6 +55,7 @@ function addPackage() {
         let result = $(data);
         $("#packages-list").append(result[0]);
         $("#express-card .col-7 .tab-content").append(result[2]);
+        refreshCard();
     });
 }
 
@@ -68,4 +74,5 @@ function deletePackage() {
         "number": curr_item.attr("href").split("-")[1],
         "name": curr_item.find("h5").text(),
     });
+    refreshCard();
 }
