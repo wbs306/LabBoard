@@ -21,18 +21,15 @@ class BaiduExpress:
             "nu": number,
             "com": company
         }, cookies=cookie).json()["data"]
-        
-        if (result["info"]["state"] == "0"):
-            return {
-                "info": result["info"],
-                "notice": result["notice"],
-                "name": result["company"]["fullname"]
-            }
-        else:
-            return {
-                "info": result["info"],
-                "name": result["company"]["fullname"]
-            }
+
+        ret_dict = {
+            "info": result["info"],
+            "name": result["company"]["fullname"]
+        }
+
+        if (result["info"].get("state") and result["info"]["state"] == "0"):
+            ret_dict["notice"] = result["notice"]
+        return ret_dict
 
     def get_express_company(self, number):
         url = f"https://alayn.baidu.com/express/appdetail/autotip?&orderId={number}&sandbox=true"
